@@ -1,0 +1,6 @@
+/data/
+/venv/
+inf.model
+*.pyc
+.idea/
+.DS_Store
