@@ -35,7 +35,7 @@ def get_pages():
         else:
             all_pages.append(li.a.get("href"))
 
-    logging.info(f"All Pages: {all_pages}")
+    logging.info(f"all pages/languages: {all_pages}")
 
     return all_pages
 
@@ -47,6 +47,7 @@ def get_wav_metadata(pages):
         lang = requests.get(BASE_URL + page, headers=HEADERS)
         dfs = pd.read_html(lang.text)
 
+        # clean table
         df = dfs[1].iloc[1:, :]
         df = df.dropna()
 
@@ -64,11 +65,10 @@ def get_wav_metadata(pages):
         language = language.replace("india", "hindi")
 
         assure_path_exist(Paths.METADATA)
-
         df.to_csv(os.path.join(Paths.METADATA, f"{language}.csv"))
 
         assure_path_exist(os.path.join(Paths.WAVS, language))
-
+        # downloading wav`s in parallel asynchronously
         with concurrent.futures.ProcessPoolExecutor() as executor:
             executor.map(partial(download_wav, language=language), df.file)
 

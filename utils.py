@@ -1,7 +1,7 @@
 import os
 
 
-# https://stackoverflow.com/questions/12265451/ask-forgiveness-not-permission-explain
+# making sure path exist in 'ask forgiveness style'
 def assure_path_exist(path: str):
     try:
         os.makedirs(path)

@@ -12,12 +12,8 @@ from utils import assure_path_exist
 class VAD:
     def detect(self):
 
-        model, utils = torch.hub.load(
-            repo_or_dir="snakers4/silero-vad",
-            model="silero_vad",
-            force_reload=True,
-        )
-
+        # setting up Silero Voice Activity Detector model
+        model, utils = torch.hub.load(repo_or_dir="snakers4/silero-vad", model="silero_vad", force_reload=True)
         (get_speech_timestamps, save_audio, read_audio, VADIterator, collect_chunks) = utils
 
         for lang in os.listdir(Paths.METADATA):
@@ -28,8 +24,7 @@ class VAD:
 
             for file in os.listdir(os.path.join(Paths.WAVS, language)):
 
-                # there was problem with one file in american lang, and vad model failed
-                # this is temporary fix to continue work, need to look in details into that audio file
+                # there is problem with reading one wav file and vad model fails
                 # american_vad.csv -> OSR_us_000_0058_8k.wav (WAVE: RIFF header not found)
 
                 logging.info(f"Running VAD for {file}")
@@ -42,7 +37,6 @@ class VAD:
 
                 except Exception as e:
                     data = {"file": [file], "has_speech": [np.nan], "error": [e]}
-
                     logging.error(e)
 
                 df = pd.concat([df, pd.DataFrame(data=data)], axis=0)
@@ -50,6 +44,5 @@ class VAD:
             logging.info(f"Saving VAD for {language}")
 
             assure_path_exist(Paths.VADS)
-
             df.reset_index(inplace=True)
             df.to_csv(os.path.join(Paths.VADS, f"{language}.csv"))

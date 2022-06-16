@@ -12,10 +12,13 @@ from utils import assure_path_exist
 class LanguageClassifier:
     def classify(self):
 
+        # setting up language classifier
         torch.backends.quantized.engine = "qnnpack"
 
         model, lang_dict, lang_group_dict, utils = torch.hub.load(
-            repo_or_dir="snakers4/silero-vad", model="silero_lang_detector_95", force_reload=True
+            repo_or_dir="snakers4/silero-vad",
+            model="silero_lang_detector_95",
+            force_reload=True,
         )
 
         get_language_and_group, read_audio = utils
