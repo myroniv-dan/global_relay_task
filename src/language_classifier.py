@@ -10,7 +10,7 @@ from utils import assure_path_exist
 
 
 class LanguageClassifier:
-    def run(self):
+    def classify(self):
 
         torch.backends.quantized.engine = "qnnpack"
 

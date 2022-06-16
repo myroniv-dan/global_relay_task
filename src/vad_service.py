@@ -10,9 +10,13 @@ from utils import assure_path_exist
 
 
 class VAD:
-    def run(self):
+    def detect(self):
 
-        model, utils = torch.hub.load(repo_or_dir="snakers4/silero-vad", model="silero_vad", force_reload=True)
+        model, utils = torch.hub.load(
+            repo_or_dir="snakers4/silero-vad",
+            model="silero_vad",
+            force_reload=True,
+        )
 
         (get_speech_timestamps, save_audio, read_audio, VADIterator, collect_chunks) = utils
 

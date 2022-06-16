@@ -9,6 +9,6 @@ class CSSPipeline:
         vad = VAD()
         language_classifier = LanguageClassifier()
 
-        crawler.run()
-        vad.run()
-        language_classifier.run()
+        crawler.crawl()
+        vad.detect()
+        language_classifier.classify()

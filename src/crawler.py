@@ -17,7 +17,7 @@ HEADERS = {
 
 
 class Crawler:
-    def run(self):
+    def crawl(self):
         get_wav_metadata(get_pages())
 
 
