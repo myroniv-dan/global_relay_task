@@ -10,14 +10,13 @@ from bs4 import BeautifulSoup
 from config import Paths
 from utils import assure_path_exist
 
-BASE_URL = 'https://www.voiptroubleshooter.com/open_speech/'
+BASE_URL = "https://www.voiptroubleshooter.com/open_speech/"
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0',
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0",
 }
 
 
 class Crawler:
-
     def run(self):
         get_wav_metadata(get_pages())
 
@@ -25,18 +24,18 @@ class Crawler:
 def get_pages():
 
     page = requests.get(BASE_URL, headers=HEADERS)
-    soup = BeautifulSoup(page.content, features='html')
+    soup = BeautifulSoup(page.content, features="html")
 
-    uls = soup.find_all('ul')
+    uls = soup.find_all("ul")
     all_pages = []
 
-    for li in uls[1].findAll('li'):
-        if 'open_speech' in li.a.get('href'):
-            all_pages.append(li.a.get('href').rsplit('/', 1)[1])
+    for li in uls[1].findAll("li"):
+        if "open_speech" in li.a.get("href"):
+            all_pages.append(li.a.get("href").rsplit("/", 1)[1])
         else:
-            all_pages.append(li.a.get('href'))
+            all_pages.append(li.a.get("href"))
 
-    logging.info(f'All Pages: {all_pages}')
+    logging.info(f"All Pages: {all_pages}")
 
     return all_pages
 
@@ -57,17 +56,16 @@ def get_wav_metadata(pages):
                 1: "m/f",
                 2: "format",
                 3: "sample Rate",
-                4: "description"
-            })
+                4: "description",
+            }
+        )
 
         language = page[:-5]
-        language = language.replace('india', 'hindi')
+        language = language.replace("india", "hindi")
 
         assure_path_exist(Paths.METADATA)
 
-        df.to_csv(os.path.join(Paths.METADATA, f'{language}.csv'))
-
-        # logging.info(f'Language: {language} \n {df}')
+        df.to_csv(os.path.join(Paths.METADATA, f"{language}.csv"))
 
         assure_path_exist(os.path.join(Paths.WAVS, language))
 
@@ -77,8 +75,8 @@ def get_wav_metadata(pages):
 
 def download_wav(file, language):
 
-    logging.info(f'Downloading: {file}')
+    logging.info(f"Downloading: {file}")
 
-    r = requests.get(BASE_URL + language + '/' + file, headers=HEADERS)
-    with open(os.path.join(Paths.WAVS, language, file), 'wb') as f:
+    r = requests.get(BASE_URL + language + "/" + file, headers=HEADERS)
+    with open(os.path.join(Paths.WAVS, language, file), "wb") as f:
         f.write(r.content)
