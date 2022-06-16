@@ -11,7 +11,7 @@
    ```
 
 3. After program finishes running, see output in `data` folder
-   * metadata: metadata `.csv` per language
-   * wavs: actual `.wav` audio files in folders per language
-   * vads: output in `.csv` of voice activity detector per language
-   * lang_clas: output in `.csv` of language classifier
+   * metadata: metadata in `.csv` format per language
+   * wavs: actual `.wav` format audio files in corresponding folders per language
+   * vads: output in `.csv` format of voice activity detector per language
+   * lang_clas: output in `.csv` format of language classifier per language
