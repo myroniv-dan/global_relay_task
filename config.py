@@ -1,8 +1,12 @@
 import os.path
 
+from datetime import datetime
+
+now = datetime.now().strftime("%Y-%m-%d-%H-%M")
+
 
 class Paths:
-    DATA = "data"
+    DATA = os.path.join("data", now)
     METADATA = os.path.join(DATA, "metadata")
     WAVS = os.path.join(DATA, "wavs")
     VADS = os.path.join(DATA, "vads")

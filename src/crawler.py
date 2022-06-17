@@ -24,7 +24,7 @@ class Crawler:
 def get_pages():
 
     page = requests.get(BASE_URL, headers=HEADERS)
-    soup = BeautifulSoup(page.content, features="html")
+    soup = BeautifulSoup(page.content, features="xml")
 
     uls = soup.find_all("ul")
     all_pages = []
