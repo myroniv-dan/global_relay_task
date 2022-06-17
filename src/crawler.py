@@ -35,7 +35,7 @@ def get_pages():
         else:
             all_pages.append(li.a.get("href"))
 
-    logging.info(f"all pages/languages: {all_pages}")
+    logging.info(f"all pages: {all_pages}")
 
     return all_pages
 
